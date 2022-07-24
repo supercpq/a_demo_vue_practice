@@ -12,7 +12,7 @@ const actions = {
                     // console.log( res.data.data)
                     // console.log( res.data)
                     // console.log( res.data.status)
-                    context.commit('SETDATA',res.data.data)
+                    context.commit('SENTDATA',res.data.data)
 
                 }},
             err=>{ console.log(err.message) })

@@ -12,11 +12,11 @@ export default {
     return {
       map:1,
       timer1:1,
-      day:1,
+      day:2,
       chartData1: {
         columns: ["times", "OutputVoltage"],
         rows: [
-          { 'times': '0', 'OutputVoltage': 0, },
+          //{ 'times': '0', 'OutputVoltage': 0, },
         ]
       }
     }
@@ -31,22 +31,22 @@ export default {
     // }
   },
   activated() {
-    this.chartData1.rows.unshift({ 'times': '0', 'OutputVoltage': 0, })
+    this.chartData1.rows.unshift({ 'times': '1', 'OutputVoltage': 0, })
     this.timer1 = setInterval(()=> {
-      this.$store.dispatch('sentData',1)
-            if(this.chartData1.rows.length > 16){
-                this.chartData1.rows.pop()
+      this.$store.dispatch('sentData',1)  //axios
+            if(this.chartData1.rows.length > this.$store.state.tableNum){
+                this.chartData1.rows.splice(this.$store.state.tableNum)
             }
-            if(this.$store.state.chartData.rows[0].isNew) {
+            if(!this.$store.state.chartData.rows[0].isNew) {
                 let row = this.$store.state.chartData.rows[0].OutputVoltage
                 this.chartData1.rows.unshift({ 'times':`${this.day++}`,'OutputVoltage':row})
-                this.$store.state.chartData.rows[0].isNew = 0
+                this.$store.state.chartData.rows[0].isNew = 1
             }
         },1000)
   },
   deactivated() {
     clearInterval(this.timer1)
-    this.day=1
+    this.day=2
     this.chartData1.rows.splice(0,this.chartData1.rows.length)
   }
 
